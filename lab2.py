@@ -8,6 +8,7 @@ def create_folders(classes):
         folder_name = f'dataset/{class_name}'
         os.makedirs(folder_name, exist_ok=True)
 
+# Функция для загрузки фото с сайта
 def download_images(query, class_name, num_images=10):
     base_url = 'https://yandex.ru/images/search'
     params = {
@@ -18,6 +19,7 @@ def download_images(query, class_name, num_images=10):
 
     response = requests.get(base_url, params=params)
     soup = BeautifulSoup(response.text, 'html.parser')
+    # поиск html тегов и классов где могу храниться изображения
     img_tags = soup.find_all('img', class_='serp-item__thumb')
 
     for i, img_tag in enumerate(img_tags[:num_images]):
@@ -32,7 +34,7 @@ def download_images(query, class_name, num_images=10):
 
         with open(filename, 'wb') as f:
             f.write(img_data)
-
+#вызов всех функций
 if __name__ == '__main__':
     classes = ['zebra', 'bay-horse']
 
